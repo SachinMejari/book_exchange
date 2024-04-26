@@ -8,4 +8,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 class BookExchangeApplication
 fun main(args: Array<String>) {
     runApplication<BookExchangeApplication>(*args)
+    
 }
