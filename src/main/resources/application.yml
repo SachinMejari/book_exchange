@@ -1,0 +1,107 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  main:
+    allow-bean-definition-overriding: false
+  application:
+    name: BOOK_EXCHANGE_SERVICE
+  data:
+    redis:
+      #      host: ${REDIS_HOST:redis://localhost}
+      #      port: 6379
+      #      database: ${REDIS_DATABASE:0}
+      url: ${REDIS_HOST:redis://127.0.0.1:6379}/${REDIS_DATABASE:0}
+      connect-timeout: 60000
+  flyway:
+    enabled: true
+    out-of-order: true
+    baselineOnMigrate: true
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
+    user: ${DB_USER:root}   # Username for database authentication
+    password: ${DB_PASSWORD:S@chin@123}  # Password for database authentication
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+  datasource:
+    master:
+      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+      test-on-borrow: true
+      hikari:
+        driver: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?sessionVariables=max_execution_time=${QUERY_TIME_OUT:500}
+        username: ${DB_USER:root}
+        password: ${DB_PASSWORD:S@chin@123}
+        connection-timeout: 60000
+        idle-timeout: 300000
+        pool-name: book_exchange-pool
+        minimum-idle: 2
+        maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        hibernate.default_lazy_loadable: true
+
+logging:
+  level:
+    #    io.r2dbc: DEBUG
+    io.micrometer: ERROR
+    statsd: ERROR
+    com:
+      thyrocare.*: DEBUG
+      pharmeasy.*: DEBUG
+      pharmeasy:
+        lever: OFF
+        carbon:
+          client.*: ERROR
+        core:
+          reactive:
+            web:
+              filters.*: ERROR
+              filters:
+                RequestResponseLoggerWebFilter: DEBUG
+                CommonWebClientRequestResponseExchangeFilterFunction: DEBUG
+        servicetemplate: INFO
+    org:
+      mongodb: ERROR
+      redisson: INFO
+      apache: ERROR
+      springframework:
+        kafka: ERROR
+        boot:
+          autoconfigure: ERROR
+        web: ERROR
+        core: ERROR
+        statemachine:
+          support.*: ERROR
+
+peapp:
+  log:
+    json:
+      enabled: ${JSON_LOGGING:false}
+      pretty: false
+  web-filters:
+    request-response-logger:
+      enabled: true
+      try-json: true
+  web-client:
+    http-connector:
+      max-life-time:
+        minutes: 30
+      pending-acquire-timeout:
+        milliseconds: 0
+      max-idle-time:
+        minutes: 15
+      max-connections: 100
+    http-connection:
+      connect-timeout:
+        milliseconds: ${CONNECT_TIME_OUT:1000}
+      read-timeout:
+        milliseconds: ${READ_TIME_OUT:2000}
