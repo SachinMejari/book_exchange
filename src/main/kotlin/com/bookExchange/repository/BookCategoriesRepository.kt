@@ -12,4 +12,15 @@ interface BookCategoriesRepository : JpaRepository<BookCategories, Long> {
                 "WHERE category.status = true"
     )
     fun getActiveCategories(): List<BookCategories>?
+    @Query(
+        "SELECT bk FROM BookCategories bk " +
+                "WHERE bk.status = true and bk.category = :name"
+    )
+    fun getCategoryByName(name: String): BookCategories?
+
+    @Query(
+        "SELECT bk FROM BookCategories bk " +
+                "WHERE bk.status = true and bk.id = :categoryId"
+    )
+    fun getCategoryById(categoryId: Long): BookCategories?
 }

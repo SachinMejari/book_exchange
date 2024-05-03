@@ -1,27 +1,14 @@
-# Build stage
-FROM openjdk:17-slim AS BUILDER
-
-ENV SRC_HOME=/home/gradle/src
-
-WORKDIR $SRC_HOME
-
-# Copy all files from your project to the Docker image
-COPY . .
-
-# Build the project
-RUN ./gradlew clean build
-
-# Run stage
+# Use OpenJDK as the base image
 FROM openjdk:17-slim
 
-ENV APP_HOME=/home/gradle/src
-ENV TZ=Asia/Kolkata
+# Set the working directory in the container
+WORKDIR /app
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Copy the application JAR file into the container
+COPY build/libs/*.jar app.jar
 
-WORKDIR $APP_HOME
+# Expose port 8080 (or any other port your application uses)
+EXPOSE 8080
 
-# Copy the built JAR file from the build stage
-COPY --from=BUILDER $SRC_HOME/build/libs/book_exchange-1.0-SNAPSHOT.jar .
-
-ENTRYPOINT ["java","-jar","book_exchange-1.0-SNAPSHOT.jar"]
+# Define the command to run the application when the container starts
+CMD ["java", "-jar", "app.jar"]
