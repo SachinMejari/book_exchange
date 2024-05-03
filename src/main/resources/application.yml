@@ -19,22 +19,22 @@ spring:
     enabled: true
     out-of-order: true
     baselineOnMigrate: true
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
-    user: ${DB_USER:root}   # Username for database authentication
-    password: ${DB_PASSWORD:S@chin@123}  # Password for database authentication
+    url: jdbc:mysql://${MYSQL_HOST:aws-learning.cls5kzj3syos.ap-south-1.rds.amazonaws.com}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
+    user: ${DB_USER:nsmadmin}   # Username for database authentication
+    password: ${DB_PASSWORD:Sachin123}  # Password for database authentication
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
   datasource:
     master:
-      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://${MYSQL_HOST:aws-learning.cls5kzj3syos.ap-south-1.rds.amazonaws.com}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?zeroDateTimeBehavior=convertToNull
       driver-class-name: com.mysql.cj.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
       test-on-borrow: true
       hikari:
         driver: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?sessionVariables=max_execution_time=${QUERY_TIME_OUT:500}
-        username: ${DB_USER:root}
-        password: ${DB_PASSWORD:S@chin@123}
+        jdbc-url: jdbc:mysql://${MYSQL_HOST:aws-learning.cls5kzj3syos.ap-south-1.rds.amazonaws.com}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:book_exchange}?sessionVariables=max_execution_time=${QUERY_TIME_OUT:500}
+        username: ${DB_USER:nsmadmin}
+        password: ${DB_PASSWORD:Sachin123}
         connection-timeout: 60000
         idle-timeout: 300000
         pool-name: book_exchange-pool
